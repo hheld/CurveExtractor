@@ -13,8 +13,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        MainWindow.cpp
+        MainWindow.cpp \
+    CEGraphicsView.cpp \
+    CEGraphicsScene.cpp
 
-HEADERS  += MainWindow.h
+HEADERS  += MainWindow.h \
+    CEGraphicsView.h \
+    CEGraphicsScene.h
 
 FORMS    += MainWindow.ui
