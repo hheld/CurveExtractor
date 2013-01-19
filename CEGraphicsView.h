@@ -20,7 +20,7 @@ signals:
 public slots:
     
 private:
-    CEGraphicsScene *scene;
+    CEGraphicsScene *theScene;
     QString backgroundImgPath;
     QPixmap bgPixmap;
 

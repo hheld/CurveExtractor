@@ -1,5 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
+#include "PointGraphicsItem.h"
+#include "CEGraphicsScene.h"
 
 #include <QFileDialog>
 #include <QDebug>
@@ -9,6 +11,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    QPointF origin(ui->doubleSpinBox_originX->value(), ui->doubleSpinBox_originY->value());
+
+    ui->graphicsView->scene()->addItem(new PointGraphicsItem(origin, tr("Origin")));
 }
 
 MainWindow::~MainWindow()

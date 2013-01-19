@@ -14,6 +14,10 @@ signals:
     
 public slots:
 
+private:
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
+
+    QPointF origin;
 };
 
 #endif // CEGRAPHICSSCENE_H

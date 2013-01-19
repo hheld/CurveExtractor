@@ -5,21 +5,21 @@
 
 CEGraphicsView::CEGraphicsView(QWidget *parent) :
     QGraphicsView(parent),
-    scene(new CEGraphicsScene)
+    theScene(new CEGraphicsScene)
 {
-    setScene(scene);
+    setScene(theScene);
 }
 
 CEGraphicsView::~CEGraphicsView()
 {
-    delete scene;
+    delete theScene;
 }
 
 void CEGraphicsView::setBackgroundImage(const QString &img)
 {
     backgroundImgPath = img;
     bgPixmap.load(backgroundImgPath);
-    scene->setSceneRect(bgPixmap.rect());
+    theScene->setSceneRect(bgPixmap.rect());
 }
 
 void CEGraphicsView::fitBgImgInView()

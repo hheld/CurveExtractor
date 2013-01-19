@@ -15,10 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         MainWindow.cpp \
     CEGraphicsView.cpp \
-    CEGraphicsScene.cpp
+    CEGraphicsScene.cpp \
+    PointGraphicsItem.cpp
 
 HEADERS  += MainWindow.h \
     CEGraphicsView.h \
-    CEGraphicsScene.h
+    CEGraphicsScene.h \
+    PointGraphicsItem.h
 
 FORMS    += MainWindow.ui
