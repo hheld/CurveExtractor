@@ -13,6 +13,12 @@ CEGraphicsScene::~CEGraphicsScene()
 {
 }
 
+void CEGraphicsScene::onUpdateOriginCoords(double x, double y)
+{
+    origin.setX(x);
+    origin.setY(y);
+}
+
 void CEGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     origin = event->scenePos();

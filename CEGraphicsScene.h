@@ -13,6 +13,7 @@ public:
 signals:
     
 public slots:
+    void onUpdateOriginCoords(double x, double y);
 
 private:
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);

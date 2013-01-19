@@ -5,8 +5,11 @@
 
 CEGraphicsView::CEGraphicsView(QWidget *parent) :
     QGraphicsView(parent),
-    theScene(new CEGraphicsScene)
+    theScene(new CEGraphicsScene),
+    showImg(true)
 {
+    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+
     setScene(theScene);
 }
 
@@ -30,11 +33,17 @@ void CEGraphicsView::fitBgImgInView()
     }
 }
 
+void CEGraphicsView::onShowImgChanged(bool showImg)
+{
+    this->showImg = showImg;
+    theScene->update();
+}
+
 void CEGraphicsView::drawBackground(QPainter *painter, const QRectF &rect)
 {
     Q_UNUSED(rect);
 
-    if(!bgPixmap.isNull())
+    if(showImg && !bgPixmap.isNull())
     {
         painter->drawPixmap(0, 0, bgPixmap);
     }

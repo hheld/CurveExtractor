@@ -18,11 +18,13 @@ public:
 signals:
     
 public slots:
+    void onShowImgChanged(bool showImg);
     
 private:
     CEGraphicsScene *theScene;
     QString backgroundImgPath;
     QPixmap bgPixmap;
+    bool showImg;
 
     void drawBackground(QPainter *painter, const QRectF &rect);
 

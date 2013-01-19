@@ -15,7 +15,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     
+signals:
+    void originChanged(double x, double y);
+
 private slots:
+    void onUpdatedOriginCoords();
+
     void on_actionOpen_image_triggered();
 
     void on_actionFit_triggered();
