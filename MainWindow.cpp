@@ -37,11 +37,19 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->lineEdit_originX, SIGNAL(textEdited(QString)), this, SLOT(onUpdatedOriginCoords()));
     connect(ui->lineEdit_originY, SIGNAL(textEdited(QString)), this, SLOT(onUpdatedOriginCoords()));
 
+    connect(ui->lineEdit_topLeftX, SIGNAL(textEdited(QString)), this, SLOT(onUpdatedTopLeftCoords()));
+    connect(ui->lineEdit_topLeftY, SIGNAL(textEdited(QString)), this, SLOT(onUpdatedTopLeftCoords()));
+
+    connect(ui->lineEdit_bottomRightX, SIGNAL(textEdited(QString)), this, SLOT(onUpdatedBottomRightCoords()));
+    connect(ui->lineEdit_bottomRightY, SIGNAL(textEdited(QString)), this, SLOT(onUpdatedBottomRightCoords()));
+
     connect(ui->checkBox_showImg, SIGNAL(clicked(bool)), ui->graphicsView, SLOT(onShowImgChanged(bool)));
 
     connect(dynamic_cast<CEGraphicsScene*>(ui->graphicsView->scene()), SIGNAL(pointAdded(double,double,PointGraphicsItem*)), model, SLOT(onAddDataPoint(double,double,PointGraphicsItem*)));
 
     connect(this, SIGNAL(originChanged(double,double)), model, SLOT(onOriginChanged(double,double)));
+    connect(this, SIGNAL(topLeftChanged(double,double)), model, SLOT(onTopLeftChanged(double,double)));
+    connect(this, SIGNAL(bottomRightChanged(double,double)), model, SLOT(onBottomrightChanged(double,double)));
 }
 
 MainWindow::~MainWindow()
@@ -91,7 +99,7 @@ void MainWindow::on_actionFit_triggered()
 
 void MainWindow::setUpAreaBoundItems()
 {
-    QPointF origin(0., 0.);
+    QPointF origin(ui->lineEdit_originX->text().toDouble(), ui->lineEdit_originY->text().toDouble());
 
     PointGraphicsItem *originItem = new PointGraphicsItem(origin, tr("Origin"));
     PointGraphicsItem *topLeftItem = new PointGraphicsItem(origin, tr("Top left"), originItem);
@@ -114,5 +122,11 @@ void MainWindow::setUpAreaBoundItems()
     ui->graphicsView->scene()->addItem(yLine);
 
     originItem->setModel(model);
+
     model->setOriginItem(originItem);
+    model->setTopLeftItem(topLeftItem);
+    model->setBottomRightItem(bottomRightItem);
+
+    model->onTopLeftChanged(ui->lineEdit_topLeftX->text().toDouble(), ui->lineEdit_topLeftY->text().toDouble());
+    model->onBottomrightChanged(ui->lineEdit_bottomRightX->text().toDouble(), ui->lineEdit_bottomRightY->text().toDouble());
 }

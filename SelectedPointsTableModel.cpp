@@ -5,7 +5,9 @@
 
 SelectedPointsTableModel::SelectedPointsTableModel(QObject *parent) :
     QAbstractTableModel(parent),
-    originItem(0)
+    originItem(0),
+    topLeftItem(0),
+    bottomRightItem(0)
 {
 }
 
@@ -31,19 +33,31 @@ QVariant SelectedPointsTableModel::data(const QModelIndex &index, int role) cons
         int c = index.column();
 
         QPointF oi(0., 0.);
+        QPointF tli(0., 0.);
+        QPointF bri(0., 0.);
 
         if(originItem)
         {
             oi = originItem->scenePos();
         }
 
+        if(topLeftItem)
+        {
+            tli = topLeftItem->scenePos();
+        }
+
+        if(bottomRightItem)
+        {
+            bri = bottomRightItem->scenePos();
+        }
+
         switch(c)
         {
         case 0:
-            return origin.x() + points.at(r).x() - oi.x();
+            return origin.x() + (points.at(r).x() - oi.x()) / (bri.x() - oi.x()) * (bottomRight.x() - origin.x());
             break;
         case 1:
-            return origin.y() + points.at(r).y() - oi.y();
+            return origin.y() + (points.at(r).y() - oi.y()) / (tli.y() - oi.y()) * (topLeft.y() - origin.y());
             break;
         }
     }
@@ -129,6 +143,16 @@ void SelectedPointsTableModel::setOriginItem(PointGraphicsItem *oi)
     originItem = oi;
 }
 
+void SelectedPointsTableModel::setTopLeftItem(PointGraphicsItem *tli)
+{
+    topLeftItem = tli;
+}
+
+void SelectedPointsTableModel::setBottomRightItem(PointGraphicsItem *bri)
+{
+    bottomRightItem = bri;
+}
+
 void SelectedPointsTableModel::onAddDataPoint(double x, double y, PointGraphicsItem *pgi)
 {
     insertRow(points.size());
@@ -148,6 +172,22 @@ void SelectedPointsTableModel::onOriginChanged(double x, double y)
 {
     origin.setX(x);
     origin.setY(y);
+
+    emit dataChanged(index(0, 0), index(points.size()-1, 1));
+}
+
+void SelectedPointsTableModel::onTopLeftChanged(double x, double y)
+{
+    topLeft.setX(x);
+    topLeft.setY(y);
+
+    emit dataChanged(index(0, 0), index(points.size()-1, 1));
+}
+
+void SelectedPointsTableModel::onBottomrightChanged(double x, double y)
+{
+    bottomRight.setX(x);
+    bottomRight.setY(y);
 
     emit dataChanged(index(0, 0), index(points.size()-1, 1));
 }

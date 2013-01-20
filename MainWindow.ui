@@ -109,7 +109,7 @@
              <set>Qt::ImhNone</set>
             </property>
             <property name="text">
-             <string>-100.0</string>
+             <string>100.0</string>
             </property>
            </widget>
           </item>

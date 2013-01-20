@@ -20,13 +20,18 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
     void positionUpdated(PointGraphicsItem *pgi);
+
     void setOriginItem(PointGraphicsItem *oi);
+    void setTopLeftItem(PointGraphicsItem *tli);
+    void setBottomRightItem(PointGraphicsItem *bri);
 
 signals:
     
 public slots:
     void onAddDataPoint(double x, double y, PointGraphicsItem *pgi);
     void onOriginChanged(double x, double y);
+    void onTopLeftChanged(double x, double y);
+    void onBottomrightChanged(double x, double y);
     
 private:
     QList<QPointF> absolutePoints;
@@ -34,8 +39,12 @@ private:
     QList<PointGraphicsItem*> pgis;
 
     QPointF origin;
+    QPointF topLeft;
+    QPointF bottomRight;
 
     PointGraphicsItem *originItem;
+    PointGraphicsItem *topLeftItem;
+    PointGraphicsItem *bottomRightItem;
 };
 
 #endif // SELECTEDPOINTSTABLEMODEL_H
