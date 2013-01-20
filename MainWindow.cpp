@@ -40,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->checkBox_showImg, SIGNAL(clicked(bool)), ui->graphicsView, SLOT(onShowImgChanged(bool)));
 
     connect(dynamic_cast<CEGraphicsScene*>(ui->graphicsView->scene()), SIGNAL(pointAdded(double,double,PointGraphicsItem*)), model, SLOT(onAddDataPoint(double,double,PointGraphicsItem*)));
+
+    connect(this, SIGNAL(originChanged(double,double)), model, SLOT(onOriginChanged(double,double)));
 }
 
 MainWindow::~MainWindow()
@@ -110,4 +112,7 @@ void MainWindow::setUpAreaBoundItems()
     ui->graphicsView->scene()->addItem(originItem);
     ui->graphicsView->scene()->addItem(xLine);
     ui->graphicsView->scene()->addItem(yLine);
+
+    originItem->setModel(model);
+    model->setOriginItem(originItem);
 }

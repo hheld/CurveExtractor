@@ -20,16 +20,22 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
     void positionUpdated(PointGraphicsItem *pgi);
+    void setOriginItem(PointGraphicsItem *oi);
 
 signals:
     
 public slots:
     void onAddDataPoint(double x, double y, PointGraphicsItem *pgi);
+    void onOriginChanged(double x, double y);
     
 private:
     QList<QPointF> absolutePoints;
     QList<QPointF> points;
     QList<PointGraphicsItem*> pgis;
+
+    QPointF origin;
+
+    PointGraphicsItem *originItem;
 };
 
 #endif // SELECTEDPOINTSTABLEMODEL_H

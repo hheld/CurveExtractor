@@ -4,7 +4,8 @@
 #include <QDebug>
 
 SelectedPointsTableModel::SelectedPointsTableModel(QObject *parent) :
-    QAbstractTableModel(parent)
+    QAbstractTableModel(parent),
+    originItem(0)
 {
 }
 
@@ -29,13 +30,20 @@ QVariant SelectedPointsTableModel::data(const QModelIndex &index, int role) cons
         int r = index.row();
         int c = index.column();
 
+        QPointF oi(0., 0.);
+
+        if(originItem)
+        {
+            oi = originItem->scenePos();
+        }
+
         switch(c)
         {
         case 0:
-            return points.at(r).x();
+            return origin.x() + points.at(r).x() - oi.x();
             break;
         case 1:
-            return points.at(r).y();
+            return origin.y() + points.at(r).y() - oi.y();
             break;
         }
     }
@@ -102,14 +110,23 @@ QVariant SelectedPointsTableModel::headerData(int section, Qt::Orientation orien
 
 void SelectedPointsTableModel::positionUpdated(PointGraphicsItem *pgi)
 {
-        int i = pgis.indexOf(pgi);
+    int i = pgis.indexOf(pgi);
 
-        if(i > -1)
-        {
-            points[i] = absolutePoints[i] + pgi->scenePos();
+    if(i > -1)
+    {
+        points[i] = absolutePoints[i] + pgi->scenePos();
 
-            emit dataChanged(index(i, 0), index(i, 1));
-        }
+        emit dataChanged(index(i, 0), index(i, 1));
+    }
+    else if(pgi == originItem)
+    {
+        emit dataChanged(index(0, 0), index(points.size()-1, 1));
+    }
+}
+
+void SelectedPointsTableModel::setOriginItem(PointGraphicsItem *oi)
+{
+    originItem = oi;
 }
 
 void SelectedPointsTableModel::onAddDataPoint(double x, double y, PointGraphicsItem *pgi)
@@ -125,4 +142,12 @@ void SelectedPointsTableModel::onAddDataPoint(double x, double y, PointGraphicsI
 
     absolutePoints[i].setX(x);
     absolutePoints[i].setY(y);
+}
+
+void SelectedPointsTableModel::onOriginChanged(double x, double y)
+{
+    origin.setX(x);
+    origin.setY(y);
+
+    emit dataChanged(index(0, 0), index(points.size()-1, 1));
 }
