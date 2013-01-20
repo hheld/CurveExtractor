@@ -13,10 +13,8 @@ void MainWindow::setValidators()
 {
     ui->lineEdit_originX->setValidator(dv);
     ui->lineEdit_originY->setValidator(dv);
-    ui->lineEdit_topLeftX->setValidator(dv);
     ui->lineEdit_topLeftY->setValidator(dv);
     ui->lineEdit_bottomRightX->setValidator(dv);
-    ui->lineEdit_bottomRightY->setValidator(dv);
 }
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -37,11 +35,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->lineEdit_originX, SIGNAL(textEdited(QString)), this, SLOT(onUpdatedOriginCoords()));
     connect(ui->lineEdit_originY, SIGNAL(textEdited(QString)), this, SLOT(onUpdatedOriginCoords()));
 
-    connect(ui->lineEdit_topLeftX, SIGNAL(textEdited(QString)), this, SLOT(onUpdatedTopLeftCoords()));
     connect(ui->lineEdit_topLeftY, SIGNAL(textEdited(QString)), this, SLOT(onUpdatedTopLeftCoords()));
-
     connect(ui->lineEdit_bottomRightX, SIGNAL(textEdited(QString)), this, SLOT(onUpdatedBottomRightCoords()));
-    connect(ui->lineEdit_bottomRightY, SIGNAL(textEdited(QString)), this, SLOT(onUpdatedBottomRightCoords()));
 
     connect(ui->checkBox_showImg, SIGNAL(clicked(bool)), ui->graphicsView, SLOT(onShowImgChanged(bool)));
 
@@ -68,18 +63,16 @@ void MainWindow::onUpdatedOriginCoords()
 
 void MainWindow::onUpdatedTopLeftCoords()
 {
-    double x = ui->lineEdit_topLeftX->text().toDouble();
     double y = ui->lineEdit_topLeftY->text().toDouble();
 
-    emit topLeftChanged(x, y);
+    emit topLeftChanged(0., y);
 }
 
 void MainWindow::onUpdatedBottomRightCoords()
 {
     double x = ui->lineEdit_bottomRightX->text().toDouble();
-    double y = ui->lineEdit_bottomRightY->text().toDouble();
 
-    emit bottomRightChanged(x, y);
+    emit bottomRightChanged(x, 0.);
 }
 
 void MainWindow::on_actionOpen_image_triggered()
@@ -127,6 +120,6 @@ void MainWindow::setUpAreaBoundItems()
     model->setTopLeftItem(topLeftItem);
     model->setBottomRightItem(bottomRightItem);
 
-    model->onTopLeftChanged(ui->lineEdit_topLeftX->text().toDouble(), ui->lineEdit_topLeftY->text().toDouble());
-    model->onBottomrightChanged(ui->lineEdit_bottomRightX->text().toDouble(), ui->lineEdit_bottomRightY->text().toDouble());
+    model->onTopLeftChanged(0., ui->lineEdit_topLeftY->text().toDouble());
+    model->onBottomrightChanged(ui->lineEdit_bottomRightX->text().toDouble(), 0.);
 }
