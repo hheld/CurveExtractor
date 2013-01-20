@@ -45,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(originChanged(double,double)), model, SLOT(onOriginChanged(double,double)));
     connect(this, SIGNAL(topLeftChanged(double,double)), model, SLOT(onTopLeftChanged(double,double)));
     connect(this, SIGNAL(bottomRightChanged(double,double)), model, SLOT(onBottomrightChanged(double,double)));
+
+    connect(model, SIGNAL(itemDataRemoved(PointGraphicsItem*)), dynamic_cast<CEGraphicsScene*>(ui->graphicsView->scene()), SLOT(onDataPointRemoved(PointGraphicsItem*)));
 }
 
 MainWindow::~MainWindow()
@@ -94,9 +96,9 @@ void MainWindow::setUpAreaBoundItems()
 {
     QPointF origin(ui->lineEdit_originX->text().toDouble(), ui->lineEdit_originY->text().toDouble());
 
-    PointGraphicsItem *originItem = new PointGraphicsItem(origin, tr("Origin"));
-    PointGraphicsItem *topLeftItem = new PointGraphicsItem(origin, tr("Top left"), originItem);
-    PointGraphicsItem *bottomRightItem = new PointGraphicsItem(origin, tr("Bottom right"), originItem);
+    PointGraphicsItem *originItem = new PointGraphicsItem(origin, tr("Origin"), true);
+    PointGraphicsItem *topLeftItem = new PointGraphicsItem(origin, tr("Top left"), true, originItem);
+    PointGraphicsItem *bottomRightItem = new PointGraphicsItem(origin, tr("Bottom right"), true, originItem);
 
     topLeftItem->moveBy(0., -100.);
     bottomRightItem->moveBy(100., 0.);

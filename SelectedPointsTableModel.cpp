@@ -153,6 +153,18 @@ void SelectedPointsTableModel::setBottomRightItem(PointGraphicsItem *bri)
     bottomRightItem = bri;
 }
 
+void SelectedPointsTableModel::removeItem(PointGraphicsItem *pgi)
+{
+    int i = pgis.indexOf(pgi);
+
+    if(i>-1)
+    {
+        removeRow(i);
+
+        emit itemDataRemoved(pgi);
+    }
+}
+
 void SelectedPointsTableModel::onAddDataPoint(double x, double y, PointGraphicsItem *pgi)
 {
     insertRow(points.size());

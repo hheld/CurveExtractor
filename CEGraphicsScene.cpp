@@ -31,3 +31,10 @@ void CEGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 
     emit pointAdded(origin.x(), origin.y(), pgi);
 }
+
+
+void CEGraphicsScene::onDataPointRemoved(PointGraphicsItem *pgi)
+{
+    removeItem(pgi);
+    delete pgi;
+}

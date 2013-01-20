@@ -19,6 +19,7 @@ signals:
     void pointAdded(double x, double y, PointGraphicsItem *pgi);
     
 public slots:
+    void onDataPointRemoved(PointGraphicsItem *pgi);
 
 private:
     SelectedPointsTableModel *model;

@@ -9,7 +9,7 @@ class SelectedPointsTableModel;
 class PointGraphicsItem : public QGraphicsItem
 {
 public:
-    PointGraphicsItem(const QPointF &center, const QString &toolTip, QGraphicsItem *parent = 0);
+    PointGraphicsItem(const QPointF &center, const QString &toolTip, bool isMeasurementPoint = false, QGraphicsItem *parent = 0);
     ~PointGraphicsItem();
 
     void setColor(const QColor &color);
@@ -22,6 +22,7 @@ public:
     void setModel(SelectedPointsTableModel *model);
 
 private:
+    bool isMeasurementPoint;
     QColor color;
     QPointF center;
     double radius;
@@ -29,6 +30,7 @@ private:
     SelectedPointsTableModel *model;
 
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 };
 
 #endif // POINTGRAPHICSITEM_H

@@ -24,8 +24,10 @@ public:
     void setOriginItem(PointGraphicsItem *oi);
     void setTopLeftItem(PointGraphicsItem *tli);
     void setBottomRightItem(PointGraphicsItem *bri);
+    void removeItem(PointGraphicsItem *pgi);
 
 signals:
+    void itemDataRemoved(PointGraphicsItem *pgi);
     
 public slots:
     void onAddDataPoint(double x, double y, PointGraphicsItem *pgi);

@@ -4,10 +4,14 @@
 
 #include <QPen>
 #include <QPainter>
+#include <QGraphicsSceneContextMenuEvent>
+#include <QMenu>
+#include <QObject>
 #include <QDebug>
 
-PointGraphicsItem::PointGraphicsItem(const QPointF &center, const QString &toolTip, QGraphicsItem *parent) :
+PointGraphicsItem::PointGraphicsItem(const QPointF &center, const QString &toolTip, bool isMeasurementPoint, QGraphicsItem *parent) :
     QGraphicsItem(parent),
+    isMeasurementPoint(isMeasurementPoint),
     color(Qt::magenta),
     center(center),
     radius(2.),
@@ -83,4 +87,19 @@ QVariant PointGraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change,
     }
 
     return QGraphicsItem::itemChange(change, value);
+}
+
+void PointGraphicsItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+    if(!isMeasurementPoint)
+    {
+        QMenu menu;
+
+        QAction *a = menu.addAction(QObject::tr("Remove point"));
+
+        if(menu.exec(event->screenPos()) == a)
+        {
+            model->removeItem(this);
+        }
+    }
 }
