@@ -7,6 +7,7 @@ namespace Ui {
 class MainWindow;
 }
 
+class SelectedPointsTableModel;
 class QDoubleValidator;
 
 class MainWindow : public QMainWindow
@@ -34,6 +35,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QDoubleValidator *dv;
+    SelectedPointsTableModel *model;
 
     void setUpAreaBoundItems();
     void setValidators();

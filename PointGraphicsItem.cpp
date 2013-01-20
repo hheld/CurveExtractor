@@ -1,19 +1,21 @@
 #include "PointGraphicsItem.h"
 #include "MeasurementAreaLineItem.h"
+#include "SelectedPointsTableModel.h"
 
 #include <QPen>
 #include <QPainter>
 #include <QDebug>
 
-PointGraphicsItem::PointGraphicsItem(const QPointF &center, const QString &toolTip, bool sendPositionChanges, QGraphicsItem *parent) :
+PointGraphicsItem::PointGraphicsItem(const QPointF &center, const QString &toolTip, QGraphicsItem *parent) :
     QGraphicsItem(parent),
     color(Qt::magenta),
     center(center),
     radius(2.),
-    connectedMeasurementLineItem(0)
+    connectedMeasurementLineItem(0),
+    model(0)
 {
     setFlag(QGraphicsItem::ItemIsMovable, true);
-    setFlag(QGraphicsItem::ItemSendsScenePositionChanges, sendPositionChanges);
+    setFlag(QGraphicsItem::ItemSendsScenePositionChanges, true);
 
     setToolTip(toolTip);
 }
@@ -63,11 +65,21 @@ void PointGraphicsItem::setConnectedMeasurementLineItem(MeasurementAreaLineItem 
     connectedMeasurementLineItem = connectedLine;
 }
 
+void PointGraphicsItem::setModel(SelectedPointsTableModel *model)
+{
+    this->model = model;
+}
+
 QVariant PointGraphicsItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value)
 {
     if(connectedMeasurementLineItem && change == ItemScenePositionHasChanged)
     {
         connectedMeasurementLineItem->endPointChangedPosition();
+    }
+
+    if(model && change == ItemScenePositionHasChanged)
+    {
+        model->positionUpdated(this);
     }
 
     return QGraphicsItem::itemChange(change, value);

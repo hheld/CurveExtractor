@@ -5,12 +5,18 @@
 #include <QDebug>
 
 CEGraphicsScene::CEGraphicsScene(QObject *parent) :
-    QGraphicsScene(parent)
+    QGraphicsScene(parent),
+    model(0)
 {
 }
 
 CEGraphicsScene::~CEGraphicsScene()
 {
+}
+
+void CEGraphicsScene::setModel(SelectedPointsTableModel *model)
+{
+    this->model = model;
 }
 
 void CEGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
@@ -19,6 +25,9 @@ void CEGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 
     PointGraphicsItem *pgi = new PointGraphicsItem(origin, tr("Data point"));
     pgi->setColor(Qt::blue);
+    pgi->setModel(model);
 
     addItem(pgi);
+
+    emit pointAdded(origin.x(), origin.y(), pgi);
 }

@@ -17,12 +17,14 @@ SOURCES += main.cpp\
     CEGraphicsView.cpp \
     CEGraphicsScene.cpp \
     PointGraphicsItem.cpp \
-    MeasurementAreaLineItem.cpp
+    MeasurementAreaLineItem.cpp \
+    SelectedPointsTableModel.cpp
 
 HEADERS  += MainWindow.h \
     CEGraphicsView.h \
     CEGraphicsScene.h \
     PointGraphicsItem.h \
-    MeasurementAreaLineItem.h
+    MeasurementAreaLineItem.h \
+    SelectedPointsTableModel.h
 
 FORMS    += MainWindow.ui

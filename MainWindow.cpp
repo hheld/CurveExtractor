@@ -3,6 +3,8 @@
 #include "PointGraphicsItem.h"
 #include "CEGraphicsScene.h"
 #include "MeasurementAreaLineItem.h"
+#include "SelectedPointsTableModel.h"
+#include "CEGraphicsScene.h"
 
 #include <QFileDialog>
 #include <QDebug>
@@ -20,9 +22,13 @@ void MainWindow::setValidators()
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    dv(new QDoubleValidator)
+    dv(new QDoubleValidator),
+    model(new SelectedPointsTableModel(this))
 {
     ui->setupUi(this);
+
+    ui->tableView_points->setModel(model);
+    dynamic_cast<CEGraphicsScene*>(ui->graphicsView->scene())->setModel(model);
 
     setValidators();
 
@@ -32,6 +38,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->lineEdit_originY, SIGNAL(textEdited(QString)), this, SLOT(onUpdatedOriginCoords()));
 
     connect(ui->checkBox_showImg, SIGNAL(clicked(bool)), ui->graphicsView, SLOT(onShowImgChanged(bool)));
+
+    connect(dynamic_cast<CEGraphicsScene*>(ui->graphicsView->scene()), SIGNAL(pointAdded(double,double,PointGraphicsItem*)), model, SLOT(onAddDataPoint(double,double,PointGraphicsItem*)));
 }
 
 MainWindow::~MainWindow()
@@ -83,9 +91,9 @@ void MainWindow::setUpAreaBoundItems()
 {
     QPointF origin(0., 0.);
 
-    PointGraphicsItem *originItem = new PointGraphicsItem(origin, tr("Origin"), true);
-    PointGraphicsItem *topLeftItem = new PointGraphicsItem(origin, tr("Top left"), true, originItem);
-    PointGraphicsItem *bottomRightItem = new PointGraphicsItem(origin, tr("Bottom right"), true, originItem);
+    PointGraphicsItem *originItem = new PointGraphicsItem(origin, tr("Origin"));
+    PointGraphicsItem *topLeftItem = new PointGraphicsItem(origin, tr("Top left"), originItem);
+    PointGraphicsItem *bottomRightItem = new PointGraphicsItem(origin, tr("Bottom right"), originItem);
 
     topLeftItem->moveBy(0., -100.);
     bottomRightItem->moveBy(100., 0.);
