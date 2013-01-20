@@ -27,6 +27,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    void setUpAreaBoundItems();
 };
 
 #endif // MAINWINDOW_H

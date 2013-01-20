@@ -25,8 +25,7 @@ private:
     QString backgroundImgPath;
     QPixmap bgPixmap;
     bool showImg;
-
-    void drawBackground(QPainter *painter, const QRectF &rect);
+    QGraphicsPixmapItem *bgItem;
 
     void wheelEvent(QWheelEvent *event);
 };

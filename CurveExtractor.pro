@@ -16,11 +16,13 @@ SOURCES += main.cpp\
         MainWindow.cpp \
     CEGraphicsView.cpp \
     CEGraphicsScene.cpp \
-    PointGraphicsItem.cpp
+    PointGraphicsItem.cpp \
+    MeasurementAreaLineItem.cpp
 
 HEADERS  += MainWindow.h \
     CEGraphicsView.h \
     CEGraphicsScene.h \
-    PointGraphicsItem.h
+    PointGraphicsItem.h \
+    MeasurementAreaLineItem.h
 
 FORMS    += MainWindow.ui

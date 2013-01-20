@@ -2,6 +2,7 @@
 #include "ui_MainWindow.h"
 #include "PointGraphicsItem.h"
 #include "CEGraphicsScene.h"
+#include "MeasurementAreaLineItem.h"
 
 #include <QFileDialog>
 #include <QDebug>
@@ -12,9 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QPointF origin(ui->doubleSpinBox_originX->value(), ui->doubleSpinBox_originY->value());
-
-    ui->graphicsView->scene()->addItem(new PointGraphicsItem(origin, tr("Origin")));
+    setUpAreaBoundItems();
 
     connect(ui->doubleSpinBox_originX, SIGNAL(valueChanged(double)), this, SLOT(onUpdatedOriginCoords()));
     connect(ui->doubleSpinBox_originY, SIGNAL(valueChanged(double)), this, SLOT(onUpdatedOriginCoords()));
@@ -50,4 +49,29 @@ void MainWindow::on_actionOpen_image_triggered()
 void MainWindow::on_actionFit_triggered()
 {
     ui->graphicsView->fitBgImgInView();
+}
+
+void MainWindow::setUpAreaBoundItems()
+{
+    QPointF origin(ui->doubleSpinBox_originX->value(), ui->doubleSpinBox_originY->value());
+
+    PointGraphicsItem *originItem = new PointGraphicsItem(origin, tr("Origin"), true);
+    PointGraphicsItem *topLeftItem = new PointGraphicsItem(origin, tr("Top left"), true, originItem);
+    PointGraphicsItem *bottomRightItem = new PointGraphicsItem(origin, tr("Bottom right"), true, originItem);
+
+    topLeftItem->moveBy(0., -100.);
+    bottomRightItem->moveBy(100., 0.);
+
+    MeasurementAreaLineItem *xLine = new MeasurementAreaLineItem(originItem, topLeftItem);
+    MeasurementAreaLineItem *yLine = new MeasurementAreaLineItem(originItem, bottomRightItem);
+
+    topLeftItem->setConnectedMeasurementLineItem(xLine);
+    bottomRightItem->setConnectedMeasurementLineItem(yLine);
+
+    xLine->setColor(originItem->getColor());
+    yLine->setColor(originItem->getColor());
+
+    ui->graphicsView->scene()->addItem(originItem);
+    ui->graphicsView->scene()->addItem(xLine);
+    ui->graphicsView->scene()->addItem(yLine);
 }
