@@ -7,18 +7,29 @@
 #include <QFileDialog>
 #include <QDebug>
 
+void MainWindow::setValidators()
+{
+    ui->lineEdit_originX->setValidator(dv);
+    ui->lineEdit_originY->setValidator(dv);
+    ui->lineEdit_topLeftX->setValidator(dv);
+    ui->lineEdit_topLeftY->setValidator(dv);
+    ui->lineEdit_bottomRightX->setValidator(dv);
+    ui->lineEdit_bottomRightY->setValidator(dv);
+}
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    dv(new QDoubleValidator)
 {
     ui->setupUi(this);
 
+    setValidators();
+
     setUpAreaBoundItems();
 
-    connect(ui->doubleSpinBox_originX, SIGNAL(valueChanged(double)), this, SLOT(onUpdatedOriginCoords()));
-    connect(ui->doubleSpinBox_originY, SIGNAL(valueChanged(double)), this, SLOT(onUpdatedOriginCoords()));
-
-    connect(this, SIGNAL(originChanged(double,double)), dynamic_cast<CEGraphicsScene*>(ui->graphicsView->scene()), SLOT(onUpdateOriginCoords(double,double)));
+    connect(ui->lineEdit_originX, SIGNAL(textEdited(QString)), this, SLOT(onUpdatedOriginCoords()));
+    connect(ui->lineEdit_originY, SIGNAL(textEdited(QString)), this, SLOT(onUpdatedOriginCoords()));
 
     connect(ui->checkBox_showImg, SIGNAL(clicked(bool)), ui->graphicsView, SLOT(onShowImgChanged(bool)));
 }
@@ -26,14 +37,31 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete dv;
 }
 
 void MainWindow::onUpdatedOriginCoords()
 {
-    double x = ui->doubleSpinBox_originX->value();
-    double y = ui->doubleSpinBox_originY->value();
+    double x = ui->lineEdit_originX->text().toDouble();
+    double y = ui->lineEdit_originY->text().toDouble();
 
     emit originChanged(x, y);
+}
+
+void MainWindow::onUpdatedTopLeftCoords()
+{
+    double x = ui->lineEdit_topLeftX->text().toDouble();
+    double y = ui->lineEdit_topLeftY->text().toDouble();
+
+    emit topLeftChanged(x, y);
+}
+
+void MainWindow::onUpdatedBottomRightCoords()
+{
+    double x = ui->lineEdit_bottomRightX->text().toDouble();
+    double y = ui->lineEdit_bottomRightY->text().toDouble();
+
+    emit bottomRightChanged(x, y);
 }
 
 void MainWindow::on_actionOpen_image_triggered()
@@ -53,7 +81,7 @@ void MainWindow::on_actionFit_triggered()
 
 void MainWindow::setUpAreaBoundItems()
 {
-    QPointF origin(ui->doubleSpinBox_originX->value(), ui->doubleSpinBox_originY->value());
+    QPointF origin(0., 0.);
 
     PointGraphicsItem *originItem = new PointGraphicsItem(origin, tr("Origin"), true);
     PointGraphicsItem *topLeftItem = new PointGraphicsItem(origin, tr("Top left"), true, originItem);
