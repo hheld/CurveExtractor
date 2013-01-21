@@ -222,6 +222,7 @@
    </attribute>
    <addaction name="actionOpen_image"/>
    <addaction name="actionFit"/>
+   <addaction name="actionSave_raw_data"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen_image">
@@ -238,6 +239,14 @@
    </property>
    <property name="toolTip">
     <string>Fit image in view</string>
+   </property>
+  </action>
+  <action name="actionSave_raw_data">
+   <property name="text">
+    <string>Save raw data</string>
+   </property>
+   <property name="toolTip">
+    <string>Save raw data to CSV file</string>
    </property>
   </action>
  </widget>

@@ -125,3 +125,34 @@ void MainWindow::setUpAreaBoundItems()
     model->onTopLeftChanged(0., ui->lineEdit_topLeftY->text().toDouble());
     model->onBottomrightChanged(ui->lineEdit_bottomRightX->text().toDouble(), 0.);
 }
+
+void MainWindow::on_actionSave_raw_data_triggered()
+{
+    if(model->rowCount() > 0)
+    {
+        QVector<double> x = model->getXData();
+        QVector<double> y = model->getYData();
+
+        QString csvFileName = QFileDialog::getSaveFileName(this, tr("Select file name"), "", tr("CSV files (*.csv"));
+
+        if(!csvFileName.isEmpty())
+        {
+            QFile file(csvFileName);
+
+            file.open(QFile::WriteOnly);
+
+            QTextStream out(&file);
+
+            int numOfLines = x.size();
+
+            Q_ASSERT(y.size() == numOfLines);
+
+            for(int i=0; i<numOfLines; ++i)
+            {
+                out << x[i] << "," << y[i] << "\n";
+            }
+
+            file.close();
+        }
+    }
+}

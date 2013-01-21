@@ -32,6 +32,8 @@ private slots:
 
     void on_actionFit_triggered();
 
+    void on_actionSave_raw_data_triggered();
+
 private:
     Ui::MainWindow *ui;
     QDoubleValidator *dv;
