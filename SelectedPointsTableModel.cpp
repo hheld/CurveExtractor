@@ -165,6 +165,34 @@ void SelectedPointsTableModel::removeItem(PointGraphicsItem *pgi)
     }
 }
 
+QVector<double> SelectedPointsTableModel::getXData() const
+{
+    int numOfRows = rowCount();
+
+    QVector<double> xData(numOfRows);
+
+    for(int i=0; i<numOfRows; ++i)
+    {
+        xData[i] = data(index(i, 0)).toDouble();
+    }
+
+    return xData;
+}
+
+QVector<double> SelectedPointsTableModel::getYData() const
+{
+    int numOfRows = rowCount();
+
+    QVector<double> yData(numOfRows);
+
+    for(int i=0; i<numOfRows; ++i)
+    {
+        yData[i] = data(index(i, 1)).toDouble();
+    }
+
+    return yData;
+}
+
 void SelectedPointsTableModel::onAddDataPoint(double x, double y, PointGraphicsItem *pgi)
 {
     insertRow(points.size());

@@ -12,9 +12,9 @@ class SelectedPointsTableModel : public QAbstractTableModel
 public:
     explicit SelectedPointsTableModel(QObject *parent = 0);
     
-    int rowCount(const QModelIndex &parent) const;
-    int columnCount(const QModelIndex &parent) const;
-    QVariant data(const QModelIndex &index, int role) const;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
@@ -25,6 +25,9 @@ public:
     void setTopLeftItem(PointGraphicsItem *tli);
     void setBottomRightItem(PointGraphicsItem *bri);
     void removeItem(PointGraphicsItem *pgi);
+
+    QVector<double> getXData() const;
+    QVector<double> getYData() const;
 
 signals:
     void itemDataRemoved(PointGraphicsItem *pgi);
