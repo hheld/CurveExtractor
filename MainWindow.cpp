@@ -5,6 +5,7 @@
 #include "MeasurementAreaLineItem.h"
 #include "SelectedPointsTableModel.h"
 #include "CEGraphicsScene.h"
+#include "CurveFitting/LeastSquaresSolver.h"
 
 #include <QFileDialog>
 #include <QDebug>
@@ -155,4 +156,12 @@ void MainWindow::on_actionSave_raw_data_triggered()
             file.close();
         }
     }
+}
+
+void MainWindow::on_actionQuadraticFit_triggered()
+{
+    LeastSquaresSolver solver;
+
+    solver.setDataPoints(model->getXData(), model->getYData());
+    solver.solve();
 }

@@ -223,6 +223,7 @@
    <addaction name="actionOpen_image"/>
    <addaction name="actionFit"/>
    <addaction name="actionSave_raw_data"/>
+   <addaction name="actionQuadraticFit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen_image">
@@ -247,6 +248,11 @@
    </property>
    <property name="toolTip">
     <string>Save raw data to CSV file</string>
+   </property>
+  </action>
+  <action name="actionQuadraticFit">
+   <property name="text">
+    <string>QuadraticFit</string>
    </property>
   </action>
  </widget>

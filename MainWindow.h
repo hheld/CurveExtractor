@@ -34,6 +34,8 @@ private slots:
 
     void on_actionSave_raw_data_triggered();
 
+    void on_actionQuadraticFit_triggered();
+
 private:
     Ui::MainWindow *ui;
     QDoubleValidator *dv;
