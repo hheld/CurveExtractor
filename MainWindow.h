@@ -29,14 +29,13 @@ private slots:
     void onUpdatedOriginCoords();
     void onUpdatedTopLeftCoords();
     void onUpdatedBottomRightCoords();
+    void doCurveFit();
 
     void on_actionOpen_image_triggered();
 
     void on_actionFit_triggered();
 
     void on_actionSave_raw_data_triggered();
-
-    void on_actionQuadraticFit_triggered();
 
 private:
     Ui::MainWindow *ui;

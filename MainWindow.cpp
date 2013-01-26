@@ -54,6 +54,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(bottomRightChanged(double,double)), model, SLOT(onBottomrightChanged(double,double)));
 
     connect(model, SIGNAL(itemDataRemoved(PointGraphicsItem*)), dynamic_cast<CEGraphicsScene*>(ui->graphicsView->scene()), SLOT(onDataPointRemoved(PointGraphicsItem*)));
+    connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(doCurveFit()));
+    connect(model, SIGNAL(pointAdded()), this, SLOT(doCurveFit()));
+    connect(model, SIGNAL(pointRemoved()), this, SLOT(doCurveFit()));
 }
 
 MainWindow::~MainWindow()
@@ -166,7 +169,7 @@ void MainWindow::on_actionSave_raw_data_triggered()
     }
 }
 
-void MainWindow::on_actionQuadraticFit_triggered()
+void MainWindow::doCurveFit()
 {
     if(fcgi)
     {

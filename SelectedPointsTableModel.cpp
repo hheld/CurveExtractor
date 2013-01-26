@@ -162,6 +162,7 @@ void SelectedPointsTableModel::removeItem(PointGraphicsItem *pgi)
         removeRow(i);
 
         emit itemDataRemoved(pgi);
+        emit pointRemoved();
     }
 }
 
@@ -206,6 +207,8 @@ void SelectedPointsTableModel::onAddDataPoint(double x, double y, PointGraphicsI
 
     absolutePoints[i].setX(x);
     absolutePoints[i].setY(y);
+
+    emit pointAdded();
 }
 
 void SelectedPointsTableModel::onOriginChanged(double x, double y)

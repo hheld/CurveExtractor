@@ -31,6 +31,8 @@ public:
 
 signals:
     void itemDataRemoved(PointGraphicsItem *pgi);
+    void pointAdded();
+    void pointRemoved();
     
 public slots:
     void onAddDataPoint(double x, double y, PointGraphicsItem *pgi);
