@@ -22,6 +22,3 @@ http://code.google.com/p/ceres-solver/
 
 ## License
 CurveExtractor is released under the New BSD License.
-
-## Screenshots
-[See screenshots here](Screenshots)
