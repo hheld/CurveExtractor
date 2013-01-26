@@ -9,8 +9,8 @@ public:
     enum curve_t
     {
         PolyQuadratic,
-        PolyCubic/*,
-        Exp*/
+        PolyCubic,
+        Exp
     };
 
     static LeastSquaresSolver* getSolver(const curve_t &type);

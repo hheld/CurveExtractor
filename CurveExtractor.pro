@@ -34,7 +34,9 @@ SOURCES += main.cpp\
     CurveFitting/QuadraticPolynomial.cpp \
     CurveFitting/LeastSquareSolverFactory.cpp \
     CurveFitting/CubicPolynomial.cpp \
-    CurveFitting/CubicPolynomialResidual.cpp
+    CurveFitting/CubicPolynomialResidual.cpp \
+    CurveFitting/ExponentialResidual.cpp \
+    CurveFitting/Exponential.cpp
 
 HEADERS  += MainWindow.h \
     CEGraphicsView.h \
@@ -48,6 +50,8 @@ HEADERS  += MainWindow.h \
     CurveFitting/QuadraticPolynomial.h \
     CurveFitting/LeastSquareSolverFactory.h \
     CurveFitting/CubicPolynomial.h \
-    CurveFitting/CubicPolynomialResidual.h
+    CurveFitting/CubicPolynomialResidual.h \
+    CurveFitting/ExponentialResidual.h \
+    CurveFitting/Exponential.h
 
 FORMS    += MainWindow.ui

@@ -2,6 +2,7 @@
 #include "LeastSquaresSolver.h"
 #include "QuadraticPolynomial.h"
 #include "CubicPolynomial.h"
+#include "Exponential.h"
 
 LeastSquaresSolver *LeastSquareSolverFactory::getSolver(const LeastSquareSolverFactory::curve_t &type)
 {
@@ -14,6 +15,9 @@ LeastSquaresSolver *LeastSquareSolverFactory::getSolver(const LeastSquareSolverF
         break;
     case PolyCubic:
         solver = new CubicPolynomial;
+        break;
+    case Exp:
+        solver = new Exponential;
         break;
     }
 
