@@ -6,6 +6,7 @@
 #include "SelectedPointsTableModel.h"
 #include "CEGraphicsScene.h"
 #include "CurveFitting/LeastSquaresSolver.h"
+#include "FittedCurveGraphicsItem.h"
 
 #include <QFileDialog>
 #include <QDebug>
@@ -22,7 +23,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     dv(new QDoubleValidator),
-    model(new SelectedPointsTableModel(this))
+    model(new SelectedPointsTableModel(this)),
+    originItem(0),
+    topLeftItem(0),
+    bottomRightItem(0),
+    fcgi(0)
 {
     ui->setupUi(this);
 
@@ -97,9 +102,9 @@ void MainWindow::setUpAreaBoundItems()
 {
     QPointF origin(ui->lineEdit_originX->text().toDouble(), ui->lineEdit_originY->text().toDouble());
 
-    PointGraphicsItem *originItem = new PointGraphicsItem(origin, tr("Origin"), true);
-    PointGraphicsItem *topLeftItem = new PointGraphicsItem(origin, tr("Top left"), true, originItem);
-    PointGraphicsItem *bottomRightItem = new PointGraphicsItem(origin, tr("Bottom right"), true, originItem);
+    originItem = new PointGraphicsItem(origin, tr("Origin"), true);
+    topLeftItem = new PointGraphicsItem(origin, tr("Top left"), true, originItem);
+    bottomRightItem = new PointGraphicsItem(origin, tr("Bottom right"), true, originItem);
 
     topLeftItem->moveBy(0., -100.);
     bottomRightItem->moveBy(100., 0.);
@@ -118,6 +123,8 @@ void MainWindow::setUpAreaBoundItems()
     ui->graphicsView->scene()->addItem(yLine);
 
     originItem->setModel(model);
+    topLeftItem->setModel(model);
+    bottomRightItem->setModel(model);
 
     model->setOriginItem(originItem);
     model->setTopLeftItem(topLeftItem);
@@ -160,8 +167,43 @@ void MainWindow::on_actionSave_raw_data_triggered()
 
 void MainWindow::on_actionQuadraticFit_triggered()
 {
+    if(fcgi)
+    {
+        ui->graphicsView->scene()->removeItem(fcgi);
+    }
+
+    delete fcgi; fcgi = 0;
+
     LeastSquaresSolver solver;
 
-    solver.setDataPoints(model->getXData(), model->getYData());
+    QVector<double> dataX = model->getXData();
+    QVector<double> dataY = model->getYData();
+
+    solver.setDataPoints(dataX, dataY);
     solver.solve();
+
+    // plot the resulting curve ###############################################
+
+    int numOfPoints = 100;
+
+    double minX = *std::min_element(dataX.begin(), dataX.end());
+    double maxX = *std::max_element(dataX.begin(), dataX.end());
+
+    QVector<double> cdX(numOfPoints);
+    QVector<double> cdY(numOfPoints);
+
+    Q_ASSERT(numOfPoints>1);
+    double deltaX = 1. / (static_cast<double>(numOfPoints)-1.) * (maxX - minX);
+
+    for(int i=0; i<numOfPoints; ++i)
+    {
+        cdX[i] = minX + i*deltaX;
+        cdY[i] = solver(cdX[i]);
+
+        cdX[i] = originItem->scenePos().x() + (cdX[i]-ui->lineEdit_originX->text().toDouble())/(ui->lineEdit_bottomRightX->text().toDouble()-ui->lineEdit_originX->text().toDouble())*(bottomRightItem->scenePos().x()-originItem->scenePos().x());
+        cdY[i] = originItem->scenePos().y() + (cdY[i]-ui->lineEdit_originY->text().toDouble())/(ui->lineEdit_topLeftY->text().toDouble()-ui->lineEdit_originY->text().toDouble())*(topLeftItem->scenePos().y()-originItem->scenePos().y());
+    }
+
+    fcgi = new FittedCurveGraphicsItem(cdX, cdY);
+    ui->graphicsView->scene()->addItem(fcgi);
 }

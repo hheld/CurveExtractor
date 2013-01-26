@@ -132,7 +132,7 @@ void SelectedPointsTableModel::positionUpdated(PointGraphicsItem *pgi)
 
         emit dataChanged(index(i, 0), index(i, 1));
     }
-    else if(pgi == originItem)
+    else if(pgi == originItem || pgi == topLeftItem || pgi == bottomRightItem)
     {
         emit dataChanged(index(0, 0), index(points.size()-1, 1));
     }

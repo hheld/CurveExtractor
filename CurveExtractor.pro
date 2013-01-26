@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     MeasurementAreaLineItem.cpp \
     SelectedPointsTableModel.cpp \
     CurveFitting/QuadraticPolynomialResidual.cpp \
-    CurveFitting/LeastSquaresSolver.cpp
+    CurveFitting/LeastSquaresSolver.cpp \
+    FittedCurveGraphicsItem.cpp
 
 HEADERS  += MainWindow.h \
     CEGraphicsView.h \
@@ -38,6 +39,7 @@ HEADERS  += MainWindow.h \
     MeasurementAreaLineItem.h \
     SelectedPointsTableModel.h \
     CurveFitting/QuadraticPolynomialResidual.h \
-    CurveFitting/LeastSquaresSolver.h
+    CurveFitting/LeastSquaresSolver.h \
+    FittedCurveGraphicsItem.h
 
 FORMS    += MainWindow.ui

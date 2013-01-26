@@ -9,6 +9,8 @@ class MainWindow;
 
 class SelectedPointsTableModel;
 class QDoubleValidator;
+class PointGraphicsItem;
+class FittedCurveGraphicsItem;
 
 class MainWindow : public QMainWindow
 {
@@ -40,6 +42,10 @@ private:
     Ui::MainWindow *ui;
     QDoubleValidator *dv;
     SelectedPointsTableModel *model;
+    PointGraphicsItem *originItem;
+    PointGraphicsItem *topLeftItem;
+    PointGraphicsItem *bottomRightItem;
+    FittedCurveGraphicsItem *fcgi;
 
     void setUpAreaBoundItems();
     void setValidators();
