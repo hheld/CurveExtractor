@@ -72,6 +72,8 @@ private slots:
 
     void on_actionSave_raw_data_triggered();
 
+    void on_actionAbout_triggered();
+
 private:
     Ui::MainWindow *ui;
     QDoubleValidator *dv;

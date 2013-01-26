@@ -44,6 +44,7 @@
 #include "FittedCurveGraphicsItem.h"
 
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QDebug>
 
 void MainWindow::setValidators()
@@ -318,4 +319,14 @@ void MainWindow::saveCurveData()
             file.close();
         }
     }
+}
+
+void MainWindow::on_actionAbout_triggered()
+{
+    QString msg = tr("<p>CurveExtractor A simple tool to extract data points from images.</p>"
+                     "<p>Copyright (c) 2013, Harald Held (harald.held@gmail.com)<br>"
+                     "All rights reserved.</p>"
+                     "<p><a href=\"https://bitbucket.org/hheld/curveextractor\">https://bitbucket.org/hheld/curveextractor</a></p>");
+
+    QMessageBox::about(this, tr("About CurveExtractor"), msg);
 }
