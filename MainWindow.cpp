@@ -152,6 +152,11 @@ void MainWindow::on_actionSave_raw_data_triggered()
 
         QString csvFileName = QFileDialog::getSaveFileName(this, tr("Select file name"), "", tr("CSV files (*.csv"));
 
+        if(!csvFileName.endsWith(".csv"))
+        {
+            csvFileName += ".csv";
+        }
+
         if(!csvFileName.isEmpty())
         {
             QFile file(csvFileName);
