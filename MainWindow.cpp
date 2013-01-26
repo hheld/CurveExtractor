@@ -191,6 +191,7 @@ void MainWindow::doCurveFit()
         solver = LeastSquareSolverFactory::getSolver(LeastSquareSolverFactory::PolyQuadratic);
         break;
     case 1:
+        solver = LeastSquareSolverFactory::getSolver(LeastSquareSolverFactory::PolyCubic);
         break;
     case 2:
         break;

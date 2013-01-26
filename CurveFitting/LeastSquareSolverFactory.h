@@ -8,8 +8,8 @@ class LeastSquareSolverFactory
 public:
     enum curve_t
     {
-        PolyQuadratic/*,
-        PolyCubic,
+        PolyQuadratic,
+        PolyCubic/*,
         Exp*/
     };
 
