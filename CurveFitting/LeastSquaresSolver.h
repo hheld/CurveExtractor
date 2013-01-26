@@ -3,6 +3,11 @@
 
 #include <QVector>
 
+namespace ceres
+{
+    class Problem;
+}
+
 /**
  * The LeastSquaresSolver class fits a quadratic polynomial y=a*x^2+b*x+c to given measurement data pairs (x,y).
  */
@@ -10,23 +15,20 @@ class LeastSquaresSolver
 {
 public:
     LeastSquaresSolver();
+    virtual ~LeastSquaresSolver();
 
     void setDataPoints(const QVector<double> &xData, const QVector<double> &yData);
     void solve();
 
-    /**
-     * @return y, with y = a*x^2+b*x+c
-     */
-    double operator()(const double &x) const;
+    virtual double operator()(const double &x) const = 0;
 
-private:
+protected:
     QVector<double> xData;
     QVector<double> yData;
 
-    // the parameters to be fitted
-    double a;
-    double b;
-    double c;
+    ceres::Problem *problem;
+
+    virtual void prepareProblem() = 0;
 };
 
 #endif // LEASTSQUARESSOLVER_H

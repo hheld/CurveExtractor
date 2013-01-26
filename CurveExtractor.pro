@@ -30,7 +30,9 @@ SOURCES += main.cpp\
     SelectedPointsTableModel.cpp \
     CurveFitting/QuadraticPolynomialResidual.cpp \
     CurveFitting/LeastSquaresSolver.cpp \
-    FittedCurveGraphicsItem.cpp
+    FittedCurveGraphicsItem.cpp \
+    CurveFitting/QuadraticPolynomial.cpp \
+    CurveFitting/LeastSquareSolverFactory.cpp
 
 HEADERS  += MainWindow.h \
     CEGraphicsView.h \
@@ -40,6 +42,8 @@ HEADERS  += MainWindow.h \
     SelectedPointsTableModel.h \
     CurveFitting/QuadraticPolynomialResidual.h \
     CurveFitting/LeastSquaresSolver.h \
-    FittedCurveGraphicsItem.h
+    FittedCurveGraphicsItem.h \
+    CurveFitting/QuadraticPolynomial.h \
+    CurveFitting/LeastSquareSolverFactory.h
 
 FORMS    += MainWindow.ui

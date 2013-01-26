@@ -6,6 +6,7 @@
 #include "SelectedPointsTableModel.h"
 #include "CEGraphicsScene.h"
 #include "CurveFitting/LeastSquaresSolver.h"
+#include "CurveFitting/LeastSquareSolverFactory.h"
 #include "FittedCurveGraphicsItem.h"
 
 #include <QFileDialog>
@@ -174,13 +175,13 @@ void MainWindow::on_actionQuadraticFit_triggered()
 
     delete fcgi; fcgi = 0;
 
-    LeastSquaresSolver solver;
+    LeastSquaresSolver *solver = LeastSquareSolverFactory::getSolver(LeastSquareSolverFactory::PolyQuadratic);
 
     QVector<double> dataX = model->getXData();
     QVector<double> dataY = model->getYData();
 
-    solver.setDataPoints(dataX, dataY);
-    solver.solve();
+    solver->setDataPoints(dataX, dataY);
+    solver->solve();
 
     // plot the resulting curve ###############################################
 
@@ -206,7 +207,7 @@ void MainWindow::on_actionQuadraticFit_triggered()
     for(int i=0; i<numOfPoints; ++i)
     {
         cdX[i] = minX + i*deltaX;
-        cdY[i] = solver(cdX[i]);
+        cdY[i] = (*solver)(cdX[i]);
 
         cdX[i] = origItemCoords.x() + (cdX[i]-originX)/(bottomRightX-originX)*(brItemCoords.x()-origItemCoords.x());
         cdY[i] = origItemCoords.y() + (cdY[i]-originY)/(topLeftY-originY)*(tlItemCoords.y()-origItemCoords.y());
@@ -214,4 +215,6 @@ void MainWindow::on_actionQuadraticFit_triggered()
 
     fcgi = new FittedCurveGraphicsItem(cdX, cdY);
     ui->graphicsView->scene()->addItem(fcgi);
+
+    delete solver;
 }
