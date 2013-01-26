@@ -9,6 +9,8 @@ public:
     FittedCurveGraphicsItem(const QVector<double> &curveDataX, const QVector<double> &curveDataY, QGraphicsItem *parent = 0);
     ~FittedCurveGraphicsItem();
 
+    QPolygonF getPoints() const;
+
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QRectF boundingRect() const;
 

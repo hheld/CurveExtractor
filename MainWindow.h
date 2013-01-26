@@ -30,6 +30,7 @@ private slots:
     void onUpdatedTopLeftCoords();
     void onUpdatedBottomRightCoords();
     void doCurveFit();
+    void saveCurveData();
 
     void on_actionOpen_image_triggered();
 

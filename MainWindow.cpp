@@ -59,7 +59,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(model, SIGNAL(pointRemoved()), this, SLOT(doCurveFit()));
 
     connect(ui->comboBox_curveType, SIGNAL(currentIndexChanged(int)), this, SLOT(doCurveFit()));
-    connect(ui->spinBox, SIGNAL(valueChanged(int)), this, SLOT(doCurveFit()));
+    connect(ui->spinBox_numPointsCurve, SIGNAL(valueChanged(int)), this, SLOT(doCurveFit()));
+
+    connect(ui->pushButton_saveCurveData, SIGNAL(clicked()), this, SLOT(saveCurveData()));
 }
 
 MainWindow::~MainWindow()
@@ -212,7 +214,7 @@ void MainWindow::doCurveFit()
 
     // plot the resulting curve ###############################################
 
-    int numOfPoints = ui->spinBox->value();
+    int numOfPoints = ui->spinBox_numPointsCurve->value();
 
     double minX = *std::min_element(dataX.begin(), dataX.end());
     double maxX = *std::max_element(dataX.begin(), dataX.end());
@@ -244,4 +246,37 @@ void MainWindow::doCurveFit()
     ui->graphicsView->scene()->addItem(fcgi);
 
     delete solver;
+}
+
+void MainWindow::saveCurveData()
+{
+    if(fcgi)
+    {
+        QPolygonF points = fcgi->getPoints();
+
+        QString csvFileName = QFileDialog::getSaveFileName(this, tr("Select file name"), "", tr("CSV files (*.csv"));
+
+        if(!csvFileName.endsWith(".csv"))
+        {
+            csvFileName += ".csv";
+        }
+
+        if(!csvFileName.isEmpty())
+        {
+            QFile file(csvFileName);
+
+            file.open(QFile::WriteOnly);
+
+            QTextStream out(&file);
+
+            int numOfPoints = points.size();
+
+            for(int i=0; i<numOfPoints; ++i)
+            {
+                out << points[i].x() << "," << -points[i].y() << "\n";
+            }
+
+            file.close();
+        }
+    }
 }

@@ -19,6 +19,11 @@ FittedCurveGraphicsItem::~FittedCurveGraphicsItem()
 {
 }
 
+QPolygonF FittedCurveGraphicsItem::getPoints() const
+{
+    return points;
+}
+
 void FittedCurveGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(option);
