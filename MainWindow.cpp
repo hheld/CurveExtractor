@@ -195,13 +195,21 @@ void MainWindow::on_actionQuadraticFit_triggered()
     Q_ASSERT(numOfPoints>1);
     double deltaX = 1. / (static_cast<double>(numOfPoints)-1.) * (maxX - minX);
 
+    double originX = ui->lineEdit_originX->text().toDouble();
+    double originY = ui->lineEdit_originY->text().toDouble();
+    double topLeftY = ui->lineEdit_topLeftY->text().toDouble();
+    double bottomRightX = ui->lineEdit_bottomRightX->text().toDouble();
+    QPointF origItemCoords = originItem->scenePos();
+    QPointF tlItemCoords = topLeftItem->scenePos();
+    QPointF brItemCoords = bottomRightItem->scenePos();
+
     for(int i=0; i<numOfPoints; ++i)
     {
         cdX[i] = minX + i*deltaX;
         cdY[i] = solver(cdX[i]);
 
-        cdX[i] = originItem->scenePos().x() + (cdX[i]-ui->lineEdit_originX->text().toDouble())/(ui->lineEdit_bottomRightX->text().toDouble()-ui->lineEdit_originX->text().toDouble())*(bottomRightItem->scenePos().x()-originItem->scenePos().x());
-        cdY[i] = originItem->scenePos().y() + (cdY[i]-ui->lineEdit_originY->text().toDouble())/(ui->lineEdit_topLeftY->text().toDouble()-ui->lineEdit_originY->text().toDouble())*(topLeftItem->scenePos().y()-originItem->scenePos().y());
+        cdX[i] = origItemCoords.x() + (cdX[i]-originX)/(bottomRightX-originX)*(brItemCoords.x()-origItemCoords.x());
+        cdY[i] = origItemCoords.y() + (cdY[i]-originY)/(topLeftY-originY)*(tlItemCoords.y()-origItemCoords.y());
     }
 
     fcgi = new FittedCurveGraphicsItem(cdX, cdY);
