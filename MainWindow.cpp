@@ -57,6 +57,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(doCurveFit()));
     connect(model, SIGNAL(pointAdded()), this, SLOT(doCurveFit()));
     connect(model, SIGNAL(pointRemoved()), this, SLOT(doCurveFit()));
+
+    connect(ui->comboBox_curveType, SIGNAL(currentIndexChanged(int)), this, SLOT(doCurveFit()));
+    connect(ui->spinBox, SIGNAL(valueChanged(int)), this, SLOT(doCurveFit()));
 }
 
 MainWindow::~MainWindow()
@@ -178,7 +181,26 @@ void MainWindow::doCurveFit()
 
     delete fcgi; fcgi = 0;
 
-    LeastSquaresSolver *solver = LeastSquareSolverFactory::getSolver(LeastSquareSolverFactory::PolyQuadratic);
+    int curveTypeIndex = ui->comboBox_curveType->currentIndex();
+
+    LeastSquaresSolver *solver = 0;
+
+    switch(curveTypeIndex)
+    {
+    case 0:
+        solver = LeastSquareSolverFactory::getSolver(LeastSquareSolverFactory::PolyQuadratic);
+        break;
+    case 1:
+        break;
+    case 2:
+        break;
+    }
+
+    if(!solver)
+    {
+        qDebug() << tr("Could not create a least square solver instance.");
+        return;
+    }
 
     QVector<double> dataX = model->getXData();
     QVector<double> dataY = model->getYData();
@@ -188,7 +210,7 @@ void MainWindow::doCurveFit()
 
     // plot the resulting curve ###############################################
 
-    int numOfPoints = 100;
+    int numOfPoints = ui->spinBox->value();
 
     double minX = *std::min_element(dataX.begin(), dataX.end());
     double maxX = *std::max_element(dataX.begin(), dataX.end());
