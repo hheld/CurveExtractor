@@ -58,6 +58,8 @@ void LeastSquaresSolver::setDataPoints(const QVector<double> &xData, const QVect
 
 void LeastSquaresSolver::solve()
 {
+    if(xData.size() == 0 || yData.size() == 0) return;
+
     Solver::Options options;
     options.linear_solver_type = ceres::DENSE_QR;
     options.minimizer_progress_to_stdout = true;
