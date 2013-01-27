@@ -185,7 +185,7 @@ void MainWindow::on_actionSave_raw_data_triggered()
         QVector<double> x = model->getXData();
         QVector<double> y = model->getYData();
 
-        QString csvFileName = QFileDialog::getSaveFileName(this, tr("Select file name"), "", tr("CSV files (*.csv"));
+        QString csvFileName = QFileDialog::getSaveFileName(this, tr("Select file name"), "", tr("CSV files (*.csv)"));
 
         if(!csvFileName.endsWith(".csv"))
         {
@@ -294,7 +294,7 @@ void MainWindow::saveCurveData()
     {
         QPolygonF points = fcgi->getPoints();
 
-        QString csvFileName = QFileDialog::getSaveFileName(this, tr("Select file name"), "", tr("CSV files (*.csv"));
+        QString csvFileName = QFileDialog::getSaveFileName(this, tr("Select file name"), "", tr("CSV files (*.csv)"));
 
         if(!csvFileName.endsWith(".csv"))
         {
