@@ -13,6 +13,9 @@ The tool 'CurveExtractor' tries to make this easy and convenient:
 4. immediately, a best fitting curve is computed and displayed in the background (various curve types for fitting are available)
 5. if the user likes the fitted curve, the data points can be saved to a CSV file for further processing
 
+##
+![Extracting data points from a pump curve image](wiki/Screenshot_pumpCurve.png)
+
 ## Tools
 CurveExtractor is written in C++ using Qt5 which you can get here:
 http://qt-project.org/downloads
