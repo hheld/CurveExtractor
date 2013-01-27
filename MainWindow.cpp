@@ -326,7 +326,7 @@ void MainWindow::on_actionAbout_triggered()
     QString msg = tr("<p>CurveExtractor A simple tool to extract data points from images.</p>"
                      "<p>Copyright (c) 2013, Harald Held (harald.held@gmail.com)<br>"
                      "All rights reserved.</p>"
-                     "<p><a href=\"https://bitbucket.org/hheld/curveextractor/wiki/Home\">https://bitbucket.org/hheld/curveextractor/wiki/Home</a></p>");
+                     "<p><a href=\"https://bitbucket.org/hheld/curveextractor/overview\">https://bitbucket.org/hheld/curveextractor/overview</a></p>");
 
     QMessageBox::about(this, tr("About CurveExtractor"), msg);
 }
