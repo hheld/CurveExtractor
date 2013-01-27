@@ -311,9 +311,20 @@ void MainWindow::saveCurveData()
 
             int numOfPoints = points.size();
 
+            double originX = ui->lineEdit_originX->text().toDouble();
+            double originY = ui->lineEdit_originY->text().toDouble();
+            double topLeftY = ui->lineEdit_topLeftY->text().toDouble();
+            double bottomRightX = ui->lineEdit_bottomRightX->text().toDouble();
+            QPointF origItemCoords = originItem->scenePos();
+            QPointF tlItemCoords = topLeftItem->scenePos();
+            QPointF brItemCoords = bottomRightItem->scenePos();
+
             for(int i=0; i<numOfPoints; ++i)
             {
-                out << points[i].x() << "," << -points[i].y() << "\n";
+                out << originX + (points[i].x()-origItemCoords.x()) / (brItemCoords.x()-origItemCoords.x()) * (bottomRightX-originX)
+                    << ","
+                    << originY + (points[i].y()-origItemCoords.y()) / (tlItemCoords.y()-origItemCoords.y()) * (topLeftY-originY)
+                    << "\n";
             }
 
             file.close();
