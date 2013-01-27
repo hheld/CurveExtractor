@@ -14,7 +14,7 @@ The tool 'CurveExtractor' tries to make this easy and convenient:
 5. if the user likes the fitted curve, the data points can be saved to a CSV file for further processing
 
 ## Screenshot
-![Extracting data points from a pump curve image](wiki/Screenshot_pumpCurve.png)
+![Extracting data points from a pump curve image](https://bitbucket.org/hheld/curveextractor/wiki/Screenshot_pumpCurve.png)
 
 ## Tools
 CurveExtractor is written in C++ using Qt5 which you can get here:
