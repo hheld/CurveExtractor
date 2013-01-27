@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Curve extractor</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/images/icon.svg</normaloff>:/icons/images/icon.svg</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_4">
     <item row="0" column="1">
@@ -335,6 +339,8 @@
    <header>CEGraphicsView.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

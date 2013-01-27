@@ -55,3 +55,6 @@ HEADERS  += MainWindow.h \
     CurveFitting/Exponential.h
 
 FORMS    += MainWindow.ui
+
+RESOURCES += \
+    resources.qrc
