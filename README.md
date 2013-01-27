@@ -8,12 +8,12 @@ a good approximation of curves as data points by hand.
 The tool 'CurveExtractor' tries to make this easy and convenient:
 
 1. the user loads an image file
-2. the origin and measurement dimensions can easily be set up
-3. double-clicking on the shown image adds data points; once created, those can be moved or deleted again (by right-clicking on them)
-4. immediately, a best fitting curve is computed and displayed in the background (various curve types for fitting are available)
+2. the origin and measurement dimensions can easily be set up (magenta axes in the screenshot)
+3. double-clicking on the shown image adds data points (blue points in the screenshot); once created, those can be moved or deleted again (by right-clicking on them)
+4. immediately, a best fitting curve is computed and displayed in the background (green curve in the screenshot); various curve types for fitting are available
 5. if the user likes the fitted curve, the data points can be saved to a CSV file for further processing
 
-##
+## Screenshot
 ![Extracting data points from a pump curve image](wiki/Screenshot_pumpCurve.png)
 
 ## Tools
