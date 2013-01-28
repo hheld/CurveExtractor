@@ -134,6 +134,7 @@ void MainWindow::on_actionOpen_image_triggered()
     if(!imgFileName.isEmpty())
     {
         ui->graphicsView->setBackgroundImage(imgFileName);
+        ui->statusBar->showMessage(tr("Loaded image: %1").arg(imgFileName));
     }
 }
 
