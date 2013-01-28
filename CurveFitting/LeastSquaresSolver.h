@@ -55,6 +55,7 @@ public:
     void solve();
 
     virtual double operator()(const double &x) const = 0;
+    virtual QString toString() const = 0;
 
 protected:
     QVector<double> xData;

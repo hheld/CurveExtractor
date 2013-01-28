@@ -32,6 +32,8 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <QString>
+
 #include "QuadraticPolynomial.h"
 #include "QuadraticPolynomialResidual.h"
 #include "ceres/ceres.h"
@@ -62,4 +64,11 @@ void QuadraticPolynomial::prepareProblem()
 double QuadraticPolynomial::operator ()(const double &x) const
 {
     return a*x*x + b*x + c;
+}
+
+QString QuadraticPolynomial::toString() const
+{
+    QString str("%1x^2 + %2x + %3");
+
+    return str.arg(a).arg(b).arg(c);
 }

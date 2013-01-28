@@ -32,6 +32,8 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <QString>
+
 #include "Exponential.h"
 #include "ExponentialResidual.h"
 #include "ceres/ceres.h"
@@ -62,4 +64,11 @@ void Exponential::prepareProblem()
 double Exponential::operator ()(const double &x) const
 {
     return a*exp(b*x*x + c);
+}
+
+QString Exponential::toString() const
+{
+    QString str("%1*exp(%2x^2+%3)");
+
+    return str.arg(a).arg(b).arg(c);
 }

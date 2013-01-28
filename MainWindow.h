@@ -82,6 +82,7 @@ private:
     PointGraphicsItem *topLeftItem;
     PointGraphicsItem *bottomRightItem;
     FittedCurveGraphicsItem *fcgi;
+    QString currentCurveAsString;
 
     void setUpAreaBoundItems();
     void setValidators();

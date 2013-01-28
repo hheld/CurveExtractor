@@ -44,6 +44,7 @@ public:
 
     void prepareProblem();
     double operator()(const double &x) const;
+    QString toString() const;
 
 private:
     double a;

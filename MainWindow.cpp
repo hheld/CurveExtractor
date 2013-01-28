@@ -253,6 +253,9 @@ void MainWindow::doCurveFit()
     solver->setDataPoints(dataX, dataY);
     solver->solve();
 
+    currentCurveAsString = "y = " + solver->toString();
+    ui->textBrowser_currentCurve->setText(currentCurveAsString);
+
     // plot the resulting curve ###############################################
 
     int numOfPoints = ui->spinBox_numPointsCurve->value();
@@ -319,6 +322,8 @@ void MainWindow::saveCurveData()
             QPointF origItemCoords = originItem->scenePos();
             QPointF tlItemCoords = topLeftItem->scenePos();
             QPointF brItemCoords = bottomRightItem->scenePos();
+
+            out << "# curve: " << currentCurveAsString << "\n";
 
             for(int i=0; i<numOfPoints; ++i)
             {

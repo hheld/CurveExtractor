@@ -32,6 +32,8 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <QString>
+
 #include "CubicPolynomial.h"
 #include "CubicPolynomialResidual.h"
 #include "ceres/ceres.h"
@@ -63,4 +65,11 @@ void CubicPolynomial::prepareProblem()
 double CubicPolynomial::operator ()(const double &x) const
 {
     return a*x*x*x + b*x*x + c*x + d;
+}
+
+QString CubicPolynomial::toString() const
+{
+    QString str("%1x^3 + %2x^2 + %3x + %4");
+
+    return str.arg(a).arg(b).arg(c).arg(c);
 }
