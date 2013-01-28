@@ -253,8 +253,11 @@ void MainWindow::doCurveFit()
     solver->setDataPoints(dataX, dataY);
     solver->solve();
 
-    currentCurveAsString = "y = " + solver->toString();
-    ui->textBrowser_currentCurve->setText(currentCurveAsString);
+    if(dataX.size() > 0)
+    {
+        currentCurveAsString = "y = " + solver->toString();
+        ui->textBrowser_currentCurve->setText(currentCurveAsString);
+    }
 
     // plot the resulting curve ###############################################
 
