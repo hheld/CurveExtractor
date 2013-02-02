@@ -74,6 +74,8 @@ private slots:
 
     void on_actionAbout_triggered();
 
+    void on_groupBox_curveFitting_toggled(bool checked);
+
 private:
     Ui::MainWindow *ui;
     QDoubleValidator *dv;
@@ -83,6 +85,7 @@ private:
     PointGraphicsItem *bottomRightItem;
     FittedCurveGraphicsItem *fcgi;
     QString currentCurveAsString;
+    bool doCurveFitting;
 
     void setUpAreaBoundItems();
     void setValidators();

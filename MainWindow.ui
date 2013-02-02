@@ -152,6 +152,12 @@
       <property name="title">
        <string>Curve fitting</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0">
         <widget class="QLabel" name="label_3">
@@ -290,6 +296,9 @@
     </item>
     <item row="4" column="1">
      <widget class="QGroupBox" name="groupBox_currentCurve">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="title">
        <string>Current curve</string>
       </property>

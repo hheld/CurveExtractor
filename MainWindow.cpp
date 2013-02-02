@@ -63,7 +63,8 @@ MainWindow::MainWindow(QWidget *parent) :
     originItem(0),
     topLeftItem(0),
     bottomRightItem(0),
-    fcgi(0)
+    fcgi(0),
+    doCurveFitting(false)
 {
     ui->setupUi(this);
 
@@ -217,6 +218,8 @@ void MainWindow::on_actionSave_raw_data_triggered()
 
 void MainWindow::doCurveFit()
 {
+    if(!doCurveFitting) return;
+
     if(fcgi)
     {
         ui->graphicsView->scene()->removeItem(fcgi);
@@ -349,4 +352,28 @@ void MainWindow::on_actionAbout_triggered()
                      "<p><a href=\"https://bitbucket.org/hheld/curveextractor/overview\">https://bitbucket.org/hheld/curveextractor/overview</a></p>");
 
     QMessageBox::about(this, tr("About CurveExtractor"), msg);
+}
+
+void MainWindow::on_groupBox_curveFitting_toggled(bool checked)
+{
+    ui->groupBox_currentCurve->setEnabled(checked);
+
+    if(!doCurveFitting && checked)
+    {
+        doCurveFitting = checked;
+        doCurveFit();
+    }
+
+    if(doCurveFitting && !checked)
+    {
+        ui->textBrowser_currentCurve->clear();
+
+        if(fcgi)
+        {
+            ui->graphicsView->scene()->removeItem(fcgi);
+            delete fcgi; fcgi = 0;
+        }
+
+        doCurveFitting = checked;
+    }
 }
