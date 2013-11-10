@@ -6,12 +6,16 @@
 
 CERESINCLUDEPATH = /home/harry/local/include
 CERESLIBPATH = /home/harry/local/lib
-GOOGLELOGLIBPATH = /home/harry/local/lib
+GOOGLELOGLIBPATH = /usr/lib
 
 ##################################################
+QMAKE_CXXFLAGS += -fopenmp
 
 INCLUDEPATH += $${CERESINCLUDEPATH} /usr/include/eigen3
-LIBS += -L$${CERESLIBPATH} -lceres_shared -L$${GOOGLELOGLIBPATH} -lglog
+
+LIBS += -L$${GOOGLELOGLIBPATH} -lglog
+LIBS += -L$${CERESLIBPATH} -lceres
+LIBS += -lgomp -llapack -lblas -lcholmod -lcxsparse -lcolamd -lamd -lspqr -lcamd -lsuitesparseconfig
 
 QT       += core gui
 
